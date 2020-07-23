@@ -3,20 +3,16 @@ const fs = require("fs");
 const sock = require('net');
 const path = require('path')
 
-const cmd = require("child_process");
-var ts = require('typescript');
-var tsc = require('gulp-typescript');
+// const cmd = require("child_process");
 var tss = require('typescript-simple');
+var obfuscator = require("uglify-js");
 
 const bundler = require('./pack')
 
-
-
-
-
-var start = function(host, port, options){
+function startListen(host, port, options){
 	host = host || 'localhost'
 	port = port || 9098
+	options = options || {}
 
 	console.log(`bundler start listen on ${host}:${port}`)    	
 
@@ -36,14 +32,9 @@ var start = function(host, port, options){
 				var content = fs.readFileSync(filename, "utf8");
 				var result = bundler.combine(content, path.dirname(filename), options)
 				
-				if (options.tsc){
-					
-					// result = tsc.compileString(result)
-					// cmd.execSync(`tsc ${filename} ${filename}`)
-					// var r = ts.createProgram(filename, _options)
-					// tsc('./samples/init.ts',{})
-					
-					result = tss(result);
+				with(options){
+					if (tsc)  result = tss(result);		
+					if (minify)	result = obfuscator.minify(result).code.valueOf();
 				}
 
 				let pathinfo = path.parse(filename);
@@ -61,8 +52,8 @@ var start = function(host, port, options){
 
 }
 
+module.exports = { startListen }
 
-start('localhost', 9097, { tsc: true } )
 
 
 /*

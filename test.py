@@ -35,7 +35,7 @@ def main():
 ##        print('Fix the exception in 30 seconds')
 ##        time.sleep(30000)
 
-        os.system('node index')
+        # os.system('node index')
         main()
 
 if __name__ == '__main__':

@@ -4,20 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"no test specified\" && exit 0",
-    "builder": "node index"
+    "test": "node test",
+    "builder": "node test"
   },
   "keywords": [
     "bundler",
     "javascript",
-    "import"
+    "import"	
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "sanshain",
+  "homepage": "https://github.com/Sanshain/tcp-bundler",
+  "license": "MIT",
   "dependencies": {
-    "gulp-typescript": "^6.0.0-alpha.1",
     "typescript": "^3.9.7",
-    "typescript-compiler": "^1.4.1-2",
-    "typescript-simple": "^8.0.6"
+    "typescript-simple": "^8.0.6",
+    "uglify-js": "^3.10.0"
   }
 }

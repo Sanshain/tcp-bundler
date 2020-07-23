@@ -44,7 +44,9 @@ if you use Django, you must custom loader for ideal using this plugin with tcp-b
 For descriptive reasons the examples below assumes the following simplesr calling:
 
 ```js
-start('localhost', 9098, {})
+const tcpbundler = require("tcp-bundler")
+let options = {tsc: false};										// optionally
+tcpbundler.startListen('localhost', 9098, options)
 ```
 
 ### Example 1
@@ -138,7 +140,8 @@ I should also note that this plugin does not currently support importing npm pac
 ## options:
 
 - `release : true` - disable all comments inside importing file
-- `tsc: true ` - enabble typescript complile for file contents
+- `tsc: true ` - enable typescript complile for file contents
+- `minify: true ` - minify aggregate final code
 
 ## Advanced features: 
 
@@ -159,5 +162,7 @@ import * as lazy from "./__common"
 In this case the multiple comments with `lazy` word in output file will be removed including all `import` content between them
 
 
+# PS:
 
+special thank for [tss](https://www.npmjs.com/package/typescript-simple) project
 
