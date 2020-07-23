@@ -3,12 +3,18 @@ const fs = require("fs");
 const sock = require('net');
 const path = require('path')
 
+const cmd = require("child_process");
+var ts = require('typescript');
+var tsc = require('gulp-typescript');
+var tss = require('typescript-simple');
+
 const bundler = require('./pack')
 
-var options = {}
 
 
-var start = function(host, port){
+
+
+var start = function(host, port, options){
 	host = host || 'localhost'
 	port = port || 9098
 
@@ -28,7 +34,18 @@ var start = function(host, port){
 			if (fs.existsSync(filename)){
 	
 				var content = fs.readFileSync(filename, "utf8");
-				var result = bundler.combine(content, path.dirname(filename))				
+				var result = bundler.combine(content, path.dirname(filename), options)
+				
+				if (options.tsc){
+					
+					// result = tsc.compileString(result)
+					// cmd.execSync(`tsc ${filename} ${filename}`)
+					// var r = ts.createProgram(filename, _options)
+					// tsc('./samples/init.ts',{})
+					
+					result = tss(result);
+				}
+
 				let pathinfo = path.parse(filename);
 
 				fs.writeFileSync(pathinfo.dir + path.sep + pathinfo.name + '.js', result)
@@ -45,7 +62,7 @@ var start = function(host, port){
 }
 
 
-start()
+start('localhost', 9097, { tsc: true } )
 
 
 /*

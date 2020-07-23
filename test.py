@@ -23,7 +23,7 @@ def main():
     sock = socket.socket()
     try:
 
-        sock.connect(("localhost", 9098))
+        sock.connect(("localhost", 9097))
         sock.send(filename)
         r = sock.recv(10)
         print(r)
