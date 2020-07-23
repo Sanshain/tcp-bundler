@@ -10,29 +10,33 @@ var options = {}
 
 var start = function(host, port){
 	host = host || 'localhost'
-	port = port || 9097
+	port = port || 9098
+
+	console.log(`bundler start listen on ${host}:${port}`)    	
 
 	sock.createServer(function (socket) {
 
-		console.log('bundler start listen on ')    
+		console.log('connection estableshed')    
 	
 		socket.on('data', async function(data) {
-			 
-			console.log('connected')
+			 			
 			console.time('Time');		
 	
 			let filename = data.toString();
-	
-			
+			console.log(`received task for '${filename}'`)
+				
 			if (fs.existsSync(filename)){
 	
 				var content = fs.readFileSync(filename, "utf8");
-				var result = bundler.combine(content, path.dirname(filename))
+				var result = bundler.combine(content, path.dirname(filename))				
+				let pathinfo = path.parse(filename);
+
+				fs.writeFileSync(pathinfo.dir + path.sep + pathinfo.name + '.js', result)
 			}
 			else throw new Error(`file ${filename} does not exists`)
 					
 			console.timeEnd('Time');
-			socket.write(result);
+			socket.write('success');
 				  
 		});
 		 
@@ -41,7 +45,7 @@ var start = function(host, port){
 }
 
 
-
+start()
 
 
 /*
