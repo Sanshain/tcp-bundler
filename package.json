@@ -1,12 +1,15 @@
 {
   "name": "tcp-bundler",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.9",
+  "description": "The simplest vanilla ts/js bundler based on socket connetction. \nSupports base import/export operations w/o using hard packagers like webpack",
   "main": "index.js",
   "scripts": {
     "test": "node test",
     "builder": "node test"
   },
+  "bin": {
+    "tcpb": "bin/builder"
+  },  
   "keywords": [
     "bundler",
     "javascript",

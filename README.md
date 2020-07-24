@@ -8,9 +8,34 @@ Against it uses independent modules and this differs the most punctual work inte
 ```
 npm install Sanshain/tcp-bundler
 ```
+
+You can easy start for using **tcp-bundler** globally:
+
+```
+npm i tcp-bundler -g
+```
+
+and then use everywhere: 
+
+```
+tcpb
+```
+
+or
+
+```
+tcpb 'localhost' 9098 -tsc -minify
+```
+
 ## Using
 
-For using this package you need to connect to host and port specified as params into `start()` function. For example on python:
+For using this package you need to connect to host and port specified as params into `startListen()` function. For example:
+
+```js
+tcpbundler.startListen('localhost', 9098, {});
+```
+
+And example on python for sending filename:
 
 ```python
 import socket
@@ -37,6 +62,7 @@ def main():
 
 main()
 ```
+
 if you use Django, you must custom loader for ideal using this plugin with `tcp-bundler` in debug-mode
 
 ## Examples
