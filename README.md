@@ -25,15 +25,15 @@ or like this
 tcpb 'localhost' 9098 -tsc -minify
 ```
 
-## Using
-
-For using this package you need to connect to host and port specified as params into `startListen()` function. For example:
+## Using by API:
 
 ```js
 tcpbundler.startListen('localhost', 9098, {});
 ```
 
-And example on python for sending filename:
+# Examples
+
+For using this package you need to connect to host and port specified as params into `startListen()` function. For example on python for sending filename:
 
 ```python
 import socket
