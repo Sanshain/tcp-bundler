@@ -10,7 +10,8 @@
   "keywords": [
     "bundler",
     "javascript",
-    "import"	
+    "import",
+	"typescript"
   ],
   "author": "sanshain",
   "homepage": "https://github.com/Sanshain/tcp-bundler",

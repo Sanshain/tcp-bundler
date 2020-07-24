@@ -2,12 +2,12 @@
 
 The simplest vanilla ts/js bundler supporting base import/export operation based on socket connetction. Suitable for vanilla js/ts project.
 This package similar [gulp-packager](https://www.npmjs.com/package/gulp-packager), but it does not depend on the `gulp` infrastructure . 
-Against it uses independent modules and this differs the most punctual work intended to pack source file just in moment page refresh (by properly tuning)
+Against it uses independent modules and this differs the most punctual work intended to pack source file just in moment page refresh (by properly tuning). This makes the assembly process as fast as possible and dont overloads CPU and HDD of your pс.
 
 ## Installation
-
+```
 npm install Sanshain/tcp-bundler
-
+```
 ## Using
 
 For using this package you need to connect to host and port specified as params into `start()` function. For example on python:
@@ -37,7 +37,7 @@ def main():
 
 main()
 ```
-if you use Django, you must custom loader for ideal using this plugin with tcp-bundle in debug-mode
+if you use Django, you must custom loader for ideal using this plugin with `tcp-bundler` in debug-mode
 
 ## Examples
 
@@ -145,7 +145,7 @@ I should also note that this plugin does not currently support importing npm pac
 
 ## Advanced features: 
 
-Besides using `import * as name from './...'`, `import {name} from './...'` you can also use `import './...``. 
+Besides using `import * as name from './...'`, `import {name} from './...'` you can also use `import './...'`. 
 But this option does not intended for types/class imports - what will you get a hint about in this case
 
 

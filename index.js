@@ -32,11 +32,8 @@ function startListen(host, port, options){
 				var content = fs.readFileSync(filename, "utf8");
 				var result = bundler.combine(content, path.dirname(filename), options)
 				
-				with(options){
-					if (tsc)  result = tss(result);		
-					if (minify)	result = obfuscator.minify(result).code.valueOf();
-				}
-
+				if (options.tsc)  result = tss(result);		
+				if (options.minify)	result = obfuscator.minify(result).code.valueOf();				
 				let pathinfo = path.parse(filename);
 
 				fs.writeFileSync(pathinfo.dir + path.sep + pathinfo.name + '.js', result)
