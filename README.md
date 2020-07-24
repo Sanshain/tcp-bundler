@@ -9,20 +9,18 @@ Against it uses independent modules and this differs the most punctual work inte
 npm install Sanshain/tcp-bundler
 ```
 
-You can easy start for using **tcp-bundler** globally:
+## Global installation
+
+Also you can easy start for using **tcp-bundler** globally:
 
 ```
 npm i tcp-bundler -g
 ```
-
 and then use everywhere: 
-
 ```
 tcpb
 ```
-
-or
-
+or like this
 ```
 tcpb 'localhost' 9098 -tsc -minify
 ```
