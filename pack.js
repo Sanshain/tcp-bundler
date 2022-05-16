@@ -48,11 +48,14 @@ function importInsert(content, dirpath, options){
     content = content.replace(regex, unitsPack.bind(pathman));
 
     ///* not recommended, but easy for realization:
-    regex = /^import \"\.\/(?<filename>\w+)\"/gm;
-    content = content.replace(regex, allocPack.bind(pathman)); //*/
+    // regex = /^import \"\.\/(?<filename>\w+)\"/gm;
+    // content = content.replace(regex, allocPack.bind(pathman)); //*/    
 
     regex = /^import {([\w, ]+)} from \".\/(\w+)\"/gm
     content = content.replace(regex, wrapsPack.bind(pathman)); //*/    
+
+    regex = /^import ([\w, ]+) from \".\/(\w+)\"/gm;
+    content = content.replace(regex, wrapsPack.bind(pathman)); //*/
     
     if (options && options.release)
     {
@@ -62,6 +65,28 @@ function importInsert(content, dirpath, options){
     }
 
     return content
+}
+
+
+function defaultPack(match, classNames, fileName, offset, source) {
+
+    content = this.getContent(fileName)
+    if (content == '') return ''
+
+    classNames = classNames.split(',').map(s => s.trim())
+    const matches = Array.from(content.matchAll(/^export default (function|class) (\w+)[ ]*\([\w, ]*\)[\s]*{[\w\W]*?\n}/gm))        
+
+    let match = '';
+    for (let unit of matches) {
+        if (classNames.includes(unit[2])) {
+
+            match += unit[0].substr(7) + '\n\n'
+        }
+    }
+
+    content = `\n/*start of ${fileName}*/\n${match.trim()}\n/*end*/\n\n`
+
+    return content;
 }
 
 
@@ -119,6 +144,18 @@ function unitsPack(match, modulName, fileName, offset, source){
     return content;
 }
 
+
+
+
+
+/**
+ * Obsolete!
+ * @param {RegExp} match regular expression
+ * @param {string} fileName file name
+ * @param {*} offset 
+ * @param {string} source 
+ * @returns {string}
+ */
 function allocPack(match, fileName, offset, source){
 
     content = this.getContent(fileName)
@@ -132,8 +169,8 @@ function allocPack(match, fileName, offset, source){
     else{
         // vs unique check of variable names! ie11+
         content = content.replace(/^(let|var) /gm, 'let ')
-        content = content.replace(/^export (let|var) /gm, 'var ')            
-        content = content.replace(/^export function (?<funcname>\w+)\(/gm, 'var $1 = function(')
+        content = content.replace(/^export (let|var) /gm, 'let ')            
+        content = content.replace(/^export function (?<funcname>\w+)\(/gm, 'let $1 = function(')
         
         var warn = /^export (class) (\w+)/gm.exec(content);
         if (warn){
@@ -180,7 +217,12 @@ function getContent(fileName){
     return content;
 }
 
-
+/**
+ * Remove lazy-marked chunk of code:
+ * 
+ * @param {string} content : content;
+ * @returns {string}
+ */
 function removeLazy(content){    
 
     return content.replace(/\/\*-lazy\*\/[\s\S]*?\/\*lazy-\*\//, '');    
