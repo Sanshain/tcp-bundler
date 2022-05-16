@@ -9,12 +9,12 @@
   },
   "bin": {
     "tcpb": "bin/builder"
-  },  
+  },
   "keywords": [
     "bundler",
     "javascript",
     "import",
-	"typescript"
+    "typescript"
   ],
   "author": "sanshain",
   "homepage": "https://github.com/Sanshain/tcp-bundler",

@@ -1,55 +1,55 @@
 
-const fs = require("fs");
-const sock = require('net');
-const path = require('path')
+// const fs = require("fs");
+// const sock = require('net');
+// const path = require('path')
 
-// const cmd = require("child_process");
-var tss = require('typescript-simple');
-var obfuscator = require("uglify-js");
+// // const cmd = require("child_process");
+// var tss = require('typescript-simple');
+// var obfuscator = require("uglify-js");
 
 const bundler = require('./pack')
 
-function startListen(host, port, options){
-	host = host || 'localhost'
-	port = port || 9098
-	options = options || {}
+// function startListen(host, port, options){
+// 	host = host || 'localhost'
+// 	port = port || 9098
+// 	options = options || {}
 
-	console.log(`bundler start listen on ${host}:${port}`)    	
+// 	console.log(`bundler start listen on ${host}:${port}`)    	
 
-	sock.createServer(function (socket) {
+// 	sock.createServer(function (socket) {
 
-		console.log('connection estableshed')    
+// 		console.log('connection estableshed')    
 	
-		socket.on('data', async function(data) {
+// 		socket.on('data', async function(data) {
 			 			
-			console.time('Time');		
+// 			console.time('Time');		
 	
-			let filename = data.toString();
-			console.log(`received task for '${filename}'`)
+// 			let filename = data.toString();
+// 			console.log(`received task for '${filename}'`)
 				
-			if (fs.existsSync(filename)){
+// 			if (fs.existsSync(filename)){
 	
-				var content = fs.readFileSync(filename, "utf8");
-				var result = bundler.combine(content, path.dirname(filename), options)
+// 				var content = fs.readFileSync(filename, "utf8");
+// 				var result = bundler.combine(content, path.dirname(filename), options)
 				
-				if (options.tsc)  result = tss(result);		
-				if (options.minify)	result = obfuscator.minify(result).code.valueOf();				
-				let pathinfo = path.parse(filename);
+// 				if (options.tsc)  result = tss(result);		
+// 				if (options.minify)	result = obfuscator.minify(result).code.valueOf();				
+// 				let pathinfo = path.parse(filename);
 
-				fs.writeFileSync(pathinfo.dir + path.sep + pathinfo.name + '.js', result)
-			}
-			else throw new Error(`file ${filename} does not exists`)
+// 				fs.writeFileSync(pathinfo.dir + path.sep + pathinfo.name + '.js', result)
+// 			}
+// 			else throw new Error(`file ${filename} does not exists`)
 					
-			console.timeEnd('Time');
-			socket.write('success');
+// 			console.timeEnd('Time');
+// 			socket.write('success');
 				  
-		});
+// 		});
 		 
-	}).listen(port, host);
+// 	}).listen(port, host);
 
-}
+// }
 
-module.exports = { startListen }
+module.exports = { bundler }
 
 
 
