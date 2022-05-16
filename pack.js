@@ -35,14 +35,14 @@ function integrate(from, to, options){
 }
 
 class pathMan {
-    constructor(dirname) {
+    constructor(dirname, _getContent) {
         this.dirPath = dirname;
-        this.getContent = getContent;
+        this.getContent = _getContent;
     }
 }
 
 function importInsert(content, dirpath, options){
-    let pathman = new pathMan(dirpath);
+    let pathman = new pathMan(dirpath, options.getContent || getContent);
     
     let regex = /^import \* as (?<module>\w+) from \"\.\/(?<filename>\w+)\"/gm;            
     content = content.replace(regex, unitsPack.bind(pathman));
@@ -55,7 +55,7 @@ function importInsert(content, dirpath, options){
     content = content.replace(regex, wrapsPack.bind(pathman)); //*/    
 
     regex = /^import ([\w, ]+) from \".\/(\w+)\"/gm;
-    content = content.replace(regex, wrapsPack.bind(pathman)); //*/
+    content = content.replace(regex, defaultPack.bind(pathman)); //*/
     
     if (options && options.release)
     {
