@@ -1,8 +1,6 @@
 //@ts-check
 // import "fs";
 
-const path = require('path');
-
 const extensions = ['.ts','.js']
 var exportedFiles = []
 
@@ -193,7 +191,7 @@ function getContent(fileName){
 
     const fs = require("fs");
 
-    fileName = path.normalize( this.dirPath + path.sep + fileName)
+    fileName = this.dirPath + '/' + fileName
 
     for(let ext of extensions){
         if (fs.existsSync(fileName + ext)) 
