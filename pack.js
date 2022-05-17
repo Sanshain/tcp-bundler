@@ -53,7 +53,7 @@ function importInsert(content, dirpath, options) {
     // content = content.replace(regex, allocPack.bind(pathman)); //*/    
 
     regex = /^import {([\w, ]+)} from ['"]\.\/([\w\.]+)['"]/gm
-    content = content.replace(regex, wrapsPack.bind(pathman)); //*/    
+    content = content.replace(regex, wrapsPack.bind(pathman)); //*/
 
     regex = /^import ([\w, ]+) from ['"].\/([\w\.\/]+)['"]/gm;
     content = content.replace(regex, defaultPack.bind(pathman)); //*/
@@ -72,7 +72,7 @@ function importInsert(content, dirpath, options) {
 function defaultPack(match, classNames, fileName, offset, source) {
 
     var content = this.getContent(fileName)
-    if (content == '') return ''
+    if (content == '' || !content) return ''
 
     classNames = classNames.split(',').map(s => s.trim())
     const matches = Array.from(content.matchAll(/^export default (function|class) (\w+)[ ]*\([\w, ]*\)[\s]*{[\w\W]*?\n}/gm))        
@@ -97,7 +97,7 @@ function wrapsPack(match, classNames, fileName, offset, source){
     console.log('wrapsPack...');
 
     var content = this.getContent(fileName)
-    if (content == '') return ''
+    if (content == '' || !content) return ''
 
     classNames = classNames.split(',').map(s => s.trim())
     let matches1 = Array.from(content.matchAll(/^export (let|var) (\w+) = [^\n]+/gm))    
@@ -122,7 +122,7 @@ function wrapsPack(match, classNames, fileName, offset, source){
 function unitsPack(match, modulName, fileName, offset, source){
 
     var content = this.getContent(fileName)
-    if (content == '') return ''
+    if (content == '' || !content) return ''
 
     let exportList = []
 
