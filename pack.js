@@ -45,17 +45,17 @@ function importInsert(content, dirpath, options) {
 
     let pathman = new pathMan(dirpath, options.getContent || getContent);
     
-    let regex = /^import \* as (?<module>\w+) from \"\.\/(?<filename>\w+)\"/gm;            
+    let regex = /^import \* as (?<module>\w+) from \"\.\/(?<filename>\w+)\";?/gm;            
     content = content.replace(regex, unitsPack.bind(pathman));
 
     ///* not recommended, but easy for realization:
     // regex = /^import \"\.\/(?<filename>\w+)\"/gm;
     // content = content.replace(regex, allocPack.bind(pathman)); //*/    
 
-    regex = /^import {([\w, ]+)} from ['"]\.\/([\w\.]+)['"]/gm
+    regex = /^import {([\w, ]+)} from ['"]\.\/([\w\.]+)['"];?/gm
     content = content.replace(regex, wrapsPack.bind(pathman)); //*/
 
-    regex = /^import ([\w, ]+) from ['"].\/([\w\.\/]+)['"]/gm;
+    regex = /^import ([\w, ]+) from ['"].\/([\w\.\/]+)['"];?/gm;
     content = content.replace(regex, defaultPack.bind(pathman)); //*/
     
     if (options && options.release)
@@ -82,7 +82,7 @@ function defaultPack(match, classNames, fileName, offset, source) {
     for (let unit of matches) {
         if (classNames.includes(unit[2])) {
 
-            match += unit[0].substr(7) + '\n\n'
+            match += unit[0].substr(7).replace('default ', '') + '\n\n'
         }
     }
 
