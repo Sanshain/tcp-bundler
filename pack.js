@@ -39,7 +39,10 @@ class pathMan {
     }
 }
 
-function importInsert(content, dirpath, options){
+function importInsert(content, dirpath, options) {
+    
+    console.log('importInsert...');
+
     let pathman = new pathMan(dirpath, options.getContent || getContent);
     
     let regex = /^import \* as (?<module>\w+) from \"\.\/(?<filename>\w+)\"/gm;            
@@ -90,6 +93,8 @@ function defaultPack(match, classNames, fileName, offset, source) {
 
 
 function wrapsPack(match, classNames, fileName, offset, source){
+
+    console.log('wrapsPack...');
 
     var content = this.getContent(fileName)
     if (content == '') return ''
