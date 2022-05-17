@@ -52,10 +52,10 @@ function importInsert(content, dirpath, options) {
     // regex = /^import \"\.\/(?<filename>\w+)\"/gm;
     // content = content.replace(regex, allocPack.bind(pathman)); //*/    
 
-    regex = /^import {([\w, ]+)} from \".\/(\w+)\"/gm
+    regex = /^import {([\w, ]+)} from ['"]\.\/([\w\.]+)['"]/gm
     content = content.replace(regex, wrapsPack.bind(pathman)); //*/    
 
-    regex = /^import ([\w, ]+) from \".\/(\w+)\"/gm;
+    regex = /^import ([\w, ]+) from ['"].\/([\w\.\/]+)['"]/gm;
     content = content.replace(regex, defaultPack.bind(pathman)); //*/
     
     if (options && options.release)
