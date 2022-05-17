@@ -1,6 +1,6 @@
+//@ts-check
 // import "fs";
 
-const fs = require("fs");
 const path = require('path');
 
 const extensions = ['.ts','.js']
@@ -9,7 +9,7 @@ var exportedFiles = []
 // integrate("base.ts", 'result.js')
 
 exports.combine = combine;
-exports.integrate = integrate;
+// exports.integrate = integrate;
 
 function combine(content, dirpath, options){
     
@@ -22,17 +22,17 @@ function combine(content, dirpath, options){
     return content;
 }
 
-function integrate(from, to, options){    
+// function integrate(from, to, options){    
 
-    let content = fs.readFileSync(from).toString();        
-    let filename = path.resolve(from);
+//     let content = fs.readFileSync(from).toString();        
+//     let filename = path.resolve(from);
     
-    content = combine(content, path.dirname(filename), options)
+//     content = combine(content, path.dirname(filename), options)
 
-    to = to || path.parse(filename).dir + path.sep + path.parse(filename).name + '.js';
+//     to = to || path.parse(filename).dir + path.sep + path.parse(filename).name + '.js';
 
-    fs.writeFileSync(to, content)    
-}
+//     fs.writeFileSync(to, content)    
+// }
 
 class pathMan {
     constructor(dirname, _getContent) {
@@ -70,14 +70,14 @@ function importInsert(content, dirpath, options){
 
 function defaultPack(match, classNames, fileName, offset, source) {
 
-    content = this.getContent(fileName)
+    var content = this.getContent(fileName)
     if (content == '') return ''
 
     classNames = classNames.split(',').map(s => s.trim())
     const matches = Array.from(content.matchAll(/^export default (function|class) (\w+)[ ]*\([\w, ]*\)[\s]*{[\w\W]*?\n}/gm))        
 
     console.log(match);
-    var match = '';
+    match = '';
     for (let unit of matches) {
         if (classNames.includes(unit[2])) {
 
@@ -93,16 +93,16 @@ function defaultPack(match, classNames, fileName, offset, source) {
 
 function wrapsPack(match, classNames, fileName, offset, source){
 
-    content = this.getContent(fileName)
+    var content = this.getContent(fileName)
     if (content == '') return ''
 
     classNames = classNames.split(',').map(s => s.trim())
-    matches1 = Array.from(content.matchAll(/^export (let|var) (\w+) = [^\n]+/gm))    
-    matches2 = Array.from(content.matchAll(/^export (function) (\w+)[ ]*\([\w, ]*\)[\s]*{[\w\W]*?\n}/gm))
-    matches3 = Array.from(content.matchAll(/^export (class) (\w+)([\s]*{[\w\W]*?\n})/gm))
+    let matches1 = Array.from(content.matchAll(/^export (let|var) (\w+) = [^\n]+/gm))    
+    let matches2 = Array.from(content.matchAll(/^export (function) (\w+)[ ]*\([\w, ]*\)[\s]*{[\w\W]*?\n}/gm))
+    let matches3 = Array.from(content.matchAll(/^export (class) (\w+)([\s]*{[\w\W]*?\n})/gm))
     var matches = matches1.concat(matches2, matches3);
 
-    var match = ''
+    match = ''
     for (let unit of matches)
     {
         if (classNames.includes(unit[2])){
@@ -118,7 +118,7 @@ function wrapsPack(match, classNames, fileName, offset, source){
 
 function unitsPack(match, modulName, fileName, offset, source){
 
-    content = this.getContent(fileName)
+    var content = this.getContent(fileName)
     if (content == '') return ''
 
     let exportList = []
@@ -129,7 +129,7 @@ function unitsPack(match, modulName, fileName, offset, source){
     {
         // exportList[varName] = varName
 
-        postfix = ''
+        let postfix = ''
         if (declType == 'function') postfix = '.bind(window)'
         exportList.push('\t\t' + varName + ":" + varName)
         return declType + ' ' + varName;
@@ -159,7 +159,7 @@ function unitsPack(match, modulName, fileName, offset, source){
  */
 function allocPack(match, fileName, offset, source){
 
-    content = this.getContent(fileName)
+    var content = this.getContent(fileName)
     if (content == '') return ''
 
     var simple = false;
@@ -190,6 +190,8 @@ function allocPack(match, fileName, offset, source){
 
 
 function getContent(fileName){    
+
+    const fs = require("fs");
 
     fileName = path.normalize( this.dirPath + path.sep + fileName)
 
