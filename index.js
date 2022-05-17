@@ -7,7 +7,7 @@
 // var tss = require('typescript-simple');
 // var obfuscator = require("uglify-js");
 
-const bundler = require('./pack')
+const build = require('./pack').combine;
 
 // function startListen(host, port, options){
 // 	host = host || 'localhost'
@@ -49,7 +49,7 @@ const bundler = require('./pack')
 
 // }
 
-module.exports = { bundler }
+module.exports = { build }
 
 
 
