@@ -76,7 +76,8 @@ function defaultPack(match, classNames, fileName, offset, source) {
     classNames = classNames.split(',').map(s => s.trim())
     const matches = Array.from(content.matchAll(/^export default (function|class) (\w+)[ ]*\([\w, ]*\)[\s]*{[\w\W]*?\n}/gm))        
 
-    let match = '';
+    console.log(match);
+    var match = '';
     for (let unit of matches) {
         if (classNames.includes(unit[2])) {
 
@@ -198,7 +199,7 @@ function getContent(fileName){
             fileName = fileName + ext;
             break;            
         }
-    }    
+    }
 
     if (exportedFiles.includes(fileName)) 
     {
